@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terrasense Case Study | Rohan Eldhose Manjummekudiyil</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@700&f[]=satoshi@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Local Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Satoshi', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .scroll-container {
+            height: 100vh;
+            overflow-y: scroll;
+            scroll-snap-type: y mandatory;
+            scroll-behavior: smooth;
+        }
+
+        /* Hide scrollbar for a seamless presentation feel */
+        .scroll-container::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+
+        .slide {
+            height: 100vh;
+            width: 100%;
+            scroll-snap-align: start;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            background: rgba(10, 10, 10, 0.6);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            padding: 60px;
+            border-radius: 40px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            opacity: 0;
+            transform: translateY(40px);
+            animation: slideUpFade 1s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        /* Slide specific delays */
+        #slide2 .slide-content, #slide3 .slide-content {
+            animation: none; /* Handled by intersection observer below */
+        }
+
+        @keyframes slideUpFade {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide-text h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 3.5rem;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            color: var(--text-primary);
+        }
+
+        .slide-text .tag {
+            display: inline-block;
+            padding: 8px 16px;
+            background: rgba(255, 107, 0, 0.1);
+            color: var(--primary-orange);
+            border: 1px solid rgba(255, 107, 0, 0.3);
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 25px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .slide-text p {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+        }
+
+        .slide-image-container {
+            width: 100%;
+            height: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            position: relative;
+        }
+
+        .slide-image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.8s ease;
+        }
+
+        .slide-image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        /* Navigation Dots */
+        .nav-dots {
+            position: fixed;
+            right: 40px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            z-index: 100;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--primary-orange);
+            box-shadow: 0 0 15px var(--primary-orange);
+            transform: scale(1.3);
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--primary-orange);
+            animation: bounce 2s infinite;
+            font-size: 1.5rem;
+            z-index: 10;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+
+        @media (max-width: 992px) {
+            .slide-content {
+                grid-template-columns: 1fr;
+                padding: 40px 20px;
+                gap: 30px;
+            }
+            .slide-image-container {
+                height: 300px;
+            }
+            .slide-text h2 {
+                font-size: 2.5rem;
+            }
+            .nav-dots {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- STICKY HEADER -> Back to Portfolio -->
+    <header id="site-header" class="sticky-header" style="background: transparent; box-shadow: none; position: fixed; top: 20px; left: 20px;">
+        <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; margin: 0;">
+            <a href="index.html#about" class="back-link" style="color: var(--primary-orange); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s ease; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255, 107, 0, 0.3); backdrop-filter: blur(10px);">
+                <span style="font-size: 1.1rem;">←</span> BACK TO PORTFOLIO
+            </a>
+        </div>
+    </header>
+
+    <div class="nav-dots">
+        <div class="dot active" onclick="document.getElementById('slide1').scrollIntoView()"></div>
+        <div class="dot" onclick="document.getElementById('slide2').scrollIntoView()"></div>
+        <div class="dot" onclick="document.getElementById('slide3').scrollIntoView()"></div>
+    </div>
+
+    <div class="scroll-container">
+        
+        <!-- SLIDE 1: PROBLEM STATEMENT -->
+        <section id="slide1" class="slide">
+            <div class="slide-content">
+                <div class="slide-text">
+                    <span class="tag">01 / The Challenge</span>
+                    <h2>Predicting the <br><span class="gradient-text">Unpredictable</span></h2>
+                    <p>In regions prone to severe environmental shifts, traditional forecasting models fail to provide adequate early warnings for landslides. The challenge was clear: we needed a system that doesn't just react to data, but actively anticipates terrain instability.</p>
+                    <p><strong>Terrasense</strong> was conceptualized to solve this systemic vulnerability. By fusing edge-computing hardware with predictive algorithms, the goal was to buy crucial time for disaster management units.</p>
+                </div>
+                <div class="slide-image-container">
+                    <img src="terrasense.jpeg" alt="Terrasense Hardware and Concepts">
+                </div>
+            </div>
+            <div class="scroll-indicator">↓</div>
+        </section>
+
+        <!-- SLIDE 2: ITERATION & PROCESS -->
+        <section id="slide2" class="slide">
+            <div class="slide-content" style="grid-template-columns: 1fr 1fr;">
+                <div class="slide-image-container">
+                    <img src="prize.jpeg" alt="Terrasense Hardware and Concepts" style="background: #111;">
+                </div>
+                <div class="slide-text">
+                    <span class="tag">02 / Iterative Architecture</span>
+                    <h2>Creating the <br><span style="color: var(--primary-orange);">Ecosystem</span></h2>
+                    <p>Building Terrasense required bridging physical hardware with digital tracking. The design process focused on three core modules:</p>
+                    <ul style="color: var(--text-secondary); font-size: 1.1rem; line-height: 1.8; margin-bottom: 20px; padding-left: 20px;">
+                        <li><strong>Deep Learning Rain Gauges:</strong> For hyper-localized weather telemetry.</li>
+                        <li><strong>Slope Stability Hubs:</strong> To monitor exact axis shifts in real-time.</li>
+                        <li><strong>The Alert Network:</strong> A unified dashboard ensuring absolute clarity under pressure.</li>
+                    </ul>
+                    <p>The UX process needed to remain brutalist and functional—stripping away visual noise so government operators immediately recognize critical threat levels.</p>
+                </div>
+            </div>
+            <div class="scroll-indicator">↓</div>
+        </section>
+
+        <!-- SLIDE 3: EXECUTION & IMPACT -->
+        <section id="slide3" class="slide">
+            <div class="slide-content">
+                <div class="slide-text">
+                    <span class="tag">03 / The Impact</span>
+                    <h2>Central Government <br><span class="gradient-text">Collaboration</span></h2>
+                    <p>What started as a conceptual framework rapidly gained traction, leading to an official collaboration opportunity with central government authorities.</p>
+                    <p>The final execution proves that robust logic, when paired with high-tier design and interdisciplinary research, can transition from an ambitious idea into a life-saving infrastructural asset.</p>
+                    <div style="margin-top: 30px;">
+                        <a href="index.html#skill-set" class="glass-btn" style="display: inline-flex; align-items: center; gap: 10px; padding: 15px 35px; background: rgba(255, 107, 0, 0.1); border: 1px solid var(--primary-orange); border-radius: 50px; color: var(--primary-orange); text-decoration: none; font-weight: 700; font-size: 1.1rem; transition: all 0.3s ease;">
+                           BACK TO SKILL SET
+                        </a>
+                        
+                        <style>
+                            .glass-btn:hover {
+                                background: var(--primary-orange) !important;
+                                color: white !important;
+                                transform: translateY(-5px);
+                                box-shadow: 0 15px 30px rgba(255, 107, 0, 0.3) !important;
+                            }
+                        </style>
+                    </div>
+                </div>
+                <div class="slide-image-container">
+                    <img src="terrasense.jpeg" alt="Terrasense Final Integration" style="filter: contrast(1.2) saturate(1.2);">
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <!-- Scroll Observer Script for Animations and Dot Updates -->
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        const dots = document.querySelectorAll('.dot');
+        const container = document.querySelector('.scroll-container');
+
+        const observerOptions = {
+            root: container,
+            threshold: 0.5
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Update dots
+                    const index = Array.from(slides).indexOf(entry.target);
+                    dots.forEach(dot => dot.classList.remove('active'));
+                    dots[index].classList.add('active');
+
+                    // Trigger animation if not yet triggered
+                    const content = entry.target.querySelector('.slide-content');
+                    if(content.style.animationName !== 'slideUpFade') {
+                        content.style.animation = 'slideUpFade 0.8s forwards cubic-bezier(0.165, 0.84, 0.44, 1)';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        slides.forEach(slide => {
+            observer.observe(slide);
+        });
+    </script>
+</body>
+</html>
