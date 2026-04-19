@@ -12,7 +12,6 @@
     
     <!-- Local Stylesheet -->
     <link rel="stylesheet" href="style.css">
-
     <style>
         body, html {
             margin: 0;
@@ -23,20 +22,17 @@
             font-family: 'Satoshi', sans-serif;
             overflow-x: hidden;
         }
-
         .scroll-container {
             height: 100vh;
             overflow-y: scroll;
             scroll-snap-type: y mandatory;
             scroll-behavior: smooth;
         }
-
         /* Hide scrollbar for a seamless presentation feel */
         .scroll-container::-webkit-scrollbar {
             width: 0px;
             background: transparent;
         }
-
         .slide {
             height: 100vh;
             width: 100%;
@@ -48,7 +44,6 @@
             padding: 40px;
             box-sizing: border-box;
         }
-
         .slide-content {
             max-width: 1200px;
             width: 100%;
@@ -66,16 +61,13 @@
             transform: translateY(40px);
             animation: slideUpFade 1s forwards cubic-bezier(0.165, 0.84, 0.44, 1);
         }
-
         /* Slide specific delays */
         #slide2 .slide-content, #slide3 .slide-content {
             animation: none; /* Handled by intersection observer below */
         }
-
         @keyframes slideUpFade {
             to { opacity: 1; transform: translateY(0); }
         }
-
         .slide-text h2 {
             font-family: 'Clash Display', sans-serif;
             font-size: 3.5rem;
@@ -83,7 +75,6 @@
             margin-bottom: 20px;
             color: var(--text-primary);
         }
-
         .slide-text .tag {
             display: inline-block;
             padding: 8px 16px;
@@ -97,14 +88,12 @@
             letter-spacing: 1px;
             text-transform: uppercase;
         }
-
         .slide-text p {
             font-size: 1.2rem;
             line-height: 1.7;
             color: var(--text-secondary);
             margin-bottom: 20px;
         }
-
         .slide-image-container {
             width: 100%;
             height: 500px;
@@ -113,18 +102,15 @@
             border: 1px solid rgba(255, 255, 255, 0.1);
             position: relative;
         }
-
         .slide-image-container img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             transition: transform 0.8s ease;
         }
-
         .slide-image-container:hover img {
             transform: scale(1.05);
         }
-
         /* Navigation Dots */
         .nav-dots {
             position: fixed;
@@ -136,7 +122,6 @@
             gap: 15px;
             z-index: 100;
         }
-
         .dot {
             width: 12px;
             height: 12px;
@@ -145,13 +130,11 @@
             cursor: pointer;
             transition: all 0.3s ease;
         }
-
         .dot.active {
             background: var(--primary-orange);
             box-shadow: 0 0 15px var(--primary-orange);
             transform: scale(1.3);
         }
-
         .scroll-indicator {
             position: absolute;
             bottom: 40px;
@@ -162,13 +145,11 @@
             font-size: 1.5rem;
             z-index: 10;
         }
-
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
             40% { transform: translateY(-20px) translateX(-50%); }
             60% { transform: translateY(-10px) translateX(-50%); }
         }
-
         @media (max-width: 992px) {
             .slide-content {
                 grid-template-columns: 1fr;
@@ -188,22 +169,17 @@
     </style>
 </head>
 <body>
-
-    <!-- STICKY HEADER -> Back to Portfolio -->
-    <header id="site-header" class="sticky-header" style="background: transparent; box-shadow: none; position: fixed; top: 20px; left: 20px;">
-        <div class="header-container" style="display: flex; justify-content: space-between; align-items: center; margin: 0;">
-            <a href="index.html#about" class="back-link" style="color: var(--primary-orange); text-decoration: none; font-weight: 600; font-size: 0.9rem; display: flex; align-items: center; gap: 8px; opacity: 0.8; transition: opacity 0.3s ease; background: rgba(0,0,0,0.5); padding: 12px 25px; border-radius: 50px; border: 1px solid rgba(255, 107, 0, 0.3); backdrop-filter: blur(10px);">
-                <span style="font-size: 1.1rem;">←</span> BACK TO PORTFOLIO
-            </a>
-        </div>
-    </header>
-
+    <!-- Back to Portfolio Button -->
+    <div style="position: fixed; top: 30px; left: 40px; z-index: 1000; background: rgba(20, 20, 20, 0.65); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 100px; padding: 10px 25px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);">
+        <a href="index.html" style="color: var(--text-primary); text-decoration: none; font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; gap: 10px; letter-spacing: 1px; transition: color 0.3s ease;" onmouseover="this.style.color='var(--primary-orange)';" onmouseout="this.style.color='var(--text-primary)';">
+            <span style="font-size: 1.2rem; color: var(--primary-orange);">←</span> BACK TO PORTFOLIO
+        </a>
+    </div>
     <div class="nav-dots">
         <div class="dot active" onclick="document.getElementById('slide1').scrollIntoView()"></div>
         <div class="dot" onclick="document.getElementById('slide2').scrollIntoView()"></div>
         <div class="dot" onclick="document.getElementById('slide3').scrollIntoView()"></div>
     </div>
-
     <div class="scroll-container">
         
         <!-- SLIDE 1: PROBLEM STATEMENT -->
@@ -221,7 +197,6 @@
             </div>
             <div class="scroll-indicator">↓</div>
         </section>
-
         <!-- SLIDE 2: ITERATION & PROCESS -->
         <section id="slide2" class="slide">
             <div class="slide-content" style="grid-template-columns: 1fr 1fr;">
@@ -242,7 +217,6 @@
             </div>
             <div class="scroll-indicator">↓</div>
         </section>
-
         <!-- SLIDE 3: EXECUTION & IMPACT -->
         <section id="slide3" class="slide">
             <div class="slide-content">
@@ -271,20 +245,16 @@
                 </div>
             </div>
         </section>
-
     </div>
-
     <!-- Scroll Observer Script for Animations and Dot Updates -->
     <script>
         const slides = document.querySelectorAll('.slide');
         const dots = document.querySelectorAll('.dot');
         const container = document.querySelector('.scroll-container');
-
         const observerOptions = {
             root: container,
             threshold: 0.5
         };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
@@ -292,7 +262,6 @@
                     const index = Array.from(slides).indexOf(entry.target);
                     dots.forEach(dot => dot.classList.remove('active'));
                     dots[index].classList.add('active');
-
                     // Trigger animation if not yet triggered
                     const content = entry.target.querySelector('.slide-content');
                     if(content.style.animationName !== 'slideUpFade') {
@@ -301,7 +270,6 @@
                 }
             });
         }, observerOptions);
-
         slides.forEach(slide => {
             observer.observe(slide);
         });
